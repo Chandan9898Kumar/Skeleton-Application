@@ -1,8 +1,14 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Account from "./pages/Account";
+import AccountSelection from "./pages/AccountSelection";
+import AmountEntry from "./pages/AmountEntry";
+import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import PayeeSelection from "./pages/PayeeSelection";
+import ReviewTransfer from "./pages/ReviewTransfer";
+import TransferError from "./pages/TransferError";
+import TransferSuccess from "./pages/TransferSuccess";
 
 const queryClient = new QueryClient();
 
@@ -11,7 +17,13 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/account" element={<AccountSelection />} />
+        <Route path="/payee" element={<PayeeSelection />} />
+        <Route path="/amount" element={<AmountEntry />} />
+        <Route path="/review" element={<ReviewTransfer />} />
+        <Route path="/success" element={<TransferSuccess />} />
+        <Route path="/error" element={<TransferError />} />
+        <Route path="/transactions" element={<Account />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
