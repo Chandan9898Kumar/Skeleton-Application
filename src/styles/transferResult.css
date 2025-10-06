@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  padding-top: max(2rem, env(safe-area-inset-top));
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  padding-left: max(2rem, env(safe-area-inset-left));
+  padding-right: max(2rem, env(safe-area-inset-right));
 }
 
 .result-content {
@@ -182,7 +186,7 @@
 }
 
 .error-suggestions li::before {
-  content: '→';
+  content: "→";
   color: hsl(var(--primary));
   font-weight: 700;
 }
@@ -233,6 +237,10 @@
 @media (max-width: 768px) {
   .result-container {
     padding: 1rem;
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
 
   .result-icon {
@@ -249,6 +257,14 @@
     font-size: 1.5rem;
   }
 
+  .result-message {
+    font-size: 0.9rem;
+  }
+
+  .detail-card {
+    padding: 1.25rem;
+  }
+
   .result-actions {
     flex-direction: column;
   }
@@ -261,6 +277,7 @@
   .detail-row {
     flex-direction: column;
     gap: 0.5rem;
+    padding: 0.5rem 0;
   }
 
   .detail-label {

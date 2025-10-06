@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Skeleton } from "../components/Skeleton";
 import { VirtualList } from "../components/VirtualList";
 import { mockApi } from "../api/mockApi";
-import type { AccountData } from "../api/mockApi";
-import type { Transaction } from "../api/mockApi";
+import type { AccountData, Transaction } from "../api/mockApi";
 import "../styles/account.css";
 
 const TRANSACTION_ITEM_HEIGHT = 80;
@@ -94,6 +93,7 @@ const Account: React.FC = () => {
     index: number,
     style: React.CSSProperties
   ) => {
+    console.log(index,'index');
     return (
       <div key={transaction.id} className="transaction-item" style={style}>
         <div className={`transaction-icon ${transaction.type}`}>

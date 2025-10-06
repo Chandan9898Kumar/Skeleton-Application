@@ -1,0 +1,107 @@
+/* Error State Styles */
+.error-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  min-height: 400px;
+  grid-column: 1 / -1;
+}
+
+.error-icon,
+.empty-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.error-title,
+.empty-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  margin-bottom: 12px;
+}
+
+.error-message,
+.empty-message {
+  font-size: 16px;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 24px;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.retry-button {
+  padding: 12px 32px;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.2);
+}
+
+.retry-button:hover {
+  background-color: hsl(var(--primary) / 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px hsl(var(--primary) / 0.3);
+}
+
+.retry-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px hsl(var(--primary) / 0.2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .error-state,
+  .empty-state {
+    padding: 40px 20px;
+    min-height: 300px;
+  }
+
+  .error-icon,
+  .empty-icon {
+    font-size: 60px;
+  }
+
+  .error-title,
+  .empty-title {
+    font-size: 20px;
+  }
+
+  .error-message,
+  .empty-message {
+    font-size: 14px;
+  }
+
+  .retry-button {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+}
+
+/* Safe area for mobile devices with notches */
+@supports (padding: env(safe-area-inset-top)) {
+  .error-state,
+  .empty-state {
+    padding-top: max(60px, env(safe-area-inset-top) + 40px);
+    padding-bottom: max(60px, env(safe-area-inset-bottom) + 40px);
+  }
+}

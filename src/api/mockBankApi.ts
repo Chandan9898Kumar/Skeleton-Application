@@ -2,7 +2,7 @@
 
 export interface BankAccount {
   id: string;
-  type: 'savings' | 'credit' | 'esaver' | 'credit-card' | 'current';
+  type: "savings" | "credit" | "esaver" | "credit-card" | "current";
   accountName: string;
   accountNumber: string;
   balance: number;
@@ -22,50 +22,50 @@ export interface Payee {
 const generateMockAccounts = (): BankAccount[] => {
   return [
     {
-      id: 'ACC001',
-      type: 'savings',
-      accountName: 'Premium Savings',
-      accountNumber: '****-****-****-4782',
-      balance: 45678.90,
-      currency: 'USD',
-      icon: '💰'
+      id: "ACC001",
+      type: "savings",
+      accountName: "Premium Savings",
+      accountNumber: "****-****-****-4782",
+      balance: 45678.9,
+      currency: "USD",
+      icon: "💰",
     },
     {
-      id: 'ACC002',
-      type: 'current',
-      accountName: 'Current Account',
-      accountNumber: '****-****-****-3421',
-      balance: 12890.50,
-      currency: 'USD',
-      icon: '🏦'
+      id: "ACC002",
+      type: "current",
+      accountName: "Current Account",
+      accountNumber: "****-****-****-3421",
+      balance: 12890.5,
+      currency: "USD",
+      icon: "🏦",
     },
     {
-      id: 'ACC003',
-      type: 'credit-card',
-      accountName: 'Platinum Credit Card',
-      accountNumber: '****-****-****-7856',
-      balance: 8500.00,
-      currency: 'USD',
-      icon: '💳'
+      id: "ACC003",
+      type: "credit-card",
+      accountName: "Platinum Credit Card",
+      accountNumber: "****-****-****-7856",
+      balance: 8500.0,
+      currency: "USD",
+      icon: "💳",
     },
     {
-      id: 'ACC004',
-      type: 'esaver',
-      accountName: 'E-Saver Account',
-      accountNumber: '****-****-****-9102',
+      id: "ACC004",
+      type: "esaver",
+      accountName: "E-Saver Account",
+      accountNumber: "****-****-****-9102",
       balance: 67234.75,
-      currency: 'USD',
-      icon: '📈'
+      currency: "USD",
+      icon: "📈",
     },
     {
-      id: 'ACC005',
-      type: 'credit',
-      accountName: 'Personal Loan',
-      accountNumber: '****-****-****-5643',
-      balance: -15000.00,
-      currency: 'USD',
-      icon: '💵'
-    }
+      id: "ACC005",
+      type: "credit",
+      accountName: "Personal Loan",
+      accountNumber: "****-****-****-5643",
+      balance: -15000.0,
+      currency: "USD",
+      icon: "💵",
+    },
   ];
 };
 
@@ -73,72 +73,74 @@ const generateMockAccounts = (): BankAccount[] => {
 const generateMockPayees = (count: number): Payee[] => {
   const payees: Payee[] = [
     {
-      id: 'PAY001',
-      name: 'John Anderson',
-      bankName: 'Chase Bank',
-      accountNumber: '****-****-****-1234',
-      bankLogo: '🏦'
+      id: "PAY001",
+      name: "John Anderson",
+      bankName: "Chase Bank",
+      accountNumber: "****-****-****-1234",
+      bankLogo: "🏦",
     },
     {
-      id: 'PAY002',
-      name: 'Sarah Williams',
-      bankName: 'Bank of America',
-      accountNumber: '****-****-****-5678',
-      bankLogo: '🏛️'
+      id: "PAY002",
+      name: "Sarah Williams",
+      bankName: "Bank of America",
+      accountNumber: "****-****-****-5678",
+      bankLogo: "🏛️",
     },
     {
-      id: 'PAY003',
-      name: 'Michael Brown',
-      bankName: 'Wells Fargo',
-      accountNumber: '****-****-****-9012',
-      bankLogo: '🏢'
+      id: "PAY003",
+      name: "Michael Brown",
+      bankName: "Wells Fargo",
+      accountNumber: "****-****-****-9012",
+      bankLogo: "🏢",
     },
     {
-      id: 'PAY004',
-      name: 'Emily Davis',
-      bankName: 'Citibank',
-      accountNumber: '****-****-****-3456',
-      bankLogo: '🏦'
+      id: "PAY004",
+      name: "Emily Davis",
+      bankName: "Citibank",
+      accountNumber: "****-****-****-3456",
+      bankLogo: "🏦",
     },
     {
-      id: 'PAY005',
-      name: 'David Miller',
-      bankName: 'US Bank',
-      accountNumber: '****-****-****-7890',
-      bankLogo: '🏛️'
+      id: "PAY005",
+      name: "David Miller",
+      bankName: "US Bank",
+      accountNumber: "****-****-****-7890",
+      bankLogo: "🏛️",
     },
     {
-      id: 'PAY006',
-      name: 'Jennifer Wilson',
-      bankName: 'PNC Bank',
-      accountNumber: '****-****-****-2345',
-      bankLogo: '🏢'
+      id: "PAY006",
+      name: "Jennifer Wilson",
+      bankName: "PNC Bank",
+      accountNumber: "****-****-****-2345",
+      bankLogo: "🏢",
     },
     {
-      id: 'PAY007',
-      name: 'Robert Taylor',
-      bankName: 'Capital One',
-      accountNumber: '****-****-****-6789',
-      bankLogo: '🏦'
+      id: "PAY007",
+      name: "Robert Taylor",
+      bankName: "Capital One",
+      accountNumber: "****-****-****-6789",
+      bankLogo: "🏦",
     },
     {
-      id: 'PAY008',
-      name: 'Jessica Martinez',
-      bankName: 'TD Bank',
-      accountNumber: '****-****-****-0123',
-      bankLogo: '🏛️'
-    }
+      id: "PAY008",
+      name: "Jessica Martinez",
+      bankName: "TD Bank",
+      accountNumber: "****-****-****-0123",
+      bankLogo: "🏛️",
+    },
   ];
 
   // Generate more if needed
   const result = [...payees];
   for (let i = payees.length; i < count; i++) {
     result.push({
-      id: `PAY${String(i + 1).padStart(3, '0')}`,
+      id: `PAY${String(i + 1).padStart(3, "0")}`,
       name: `Payee ${i + 1}`,
       bankName: `Bank ${Math.floor(Math.random() * 5) + 1}`,
-      accountNumber: `****-****-****-${Math.floor(1000 + Math.random() * 9000)}`,
-      bankLogo: ['🏦', '🏛️', '🏢'][Math.floor(Math.random() * 3)]
+      accountNumber: `****-****-****-${Math.floor(
+        1000 + Math.random() * 9000
+      )}`,
+      bankLogo: ["🏦", "🏛️", "🏢"][Math.floor(Math.random() * 3)],
     });
   }
 
@@ -146,7 +148,7 @@ const generateMockPayees = (count: number): Payee[] => {
 };
 
 // Simulate API delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Mock API endpoints
 export const mockBankApi = {
@@ -168,22 +170,24 @@ export const mockBankApi = {
     description?: string;
   }): Promise<{ success: boolean; transactionId?: string; error?: string }> {
     await delay(1500); // Simulate API processing time
-    
+
+    console.log(transferData, "transferData");
+
     // Simulate 90% success rate
     const isSuccess = Math.random() > 0.1;
-    
+
     if (isSuccess) {
       return {
         success: true,
-        transactionId: `TXN${Date.now()}`
+        transactionId: `TXN${Date.now()}`,
       };
     } else {
       return {
         success: false,
-        error: 'Insufficient funds or network error. Please try again.'
+        error: "Insufficient funds or network error. Please try again.",
       };
     }
-  }
+  },
 };
 
 export default mockBankApi;

@@ -1,26 +1,26 @@
-import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import type { BankAccount, Payee } from "../api/mockBankApi";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTransferStore } from "../stores/transferStore";
 import "../styles/transferResult.css";
 
 const TransferSuccess: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const {
-    selectedAccount,
-    selectedPayee,
-    amount,
-    purpose,
-    description,
-    transactionId,
-  } = location.state as {
-    selectedAccount: BankAccount;
-    selectedPayee: Payee;
-    amount: number;
-    purpose: string;
-    description?: string;
-    transactionId: string;
-  };
+
+  const selectedAccount = useTransferStore((state) => state.selectedAccount);
+  const selectedPayee = useTransferStore((state) => state.selectedPayee);
+  const amount = useTransferStore((state) => state.amount);
+  const purpose = useTransferStore((state) => state.purpose);
+  const description = useTransferStore((state) => state.description);
+  const transactionId = useTransferStore((state) => state.transactionId);
+  const canAccessResult = useTransferStore((state) => state.canAccessResult);
+  const resetTransfer = useTransferStore((state) => state.resetTransfer);
+
+  useEffect(() => {
+    // Route guard
+    if (!canAccessResult() || !transactionId) {
+      navigate("/account", { replace: true });
+    }
+  }, [canAccessResult, transactionId, navigate]);
 
   const formatCurrency = (amount: number, currency: string = "USD"): string => {
     return new Intl.NumberFormat("en-US", {
@@ -39,8 +39,17 @@ const TransferSuccess: React.FC = () => {
     });
   };
 
-  if (!selectedAccount || !selectedPayee || !amount) {
+  const handleBackToAccounts = () => {
+    resetTransfer();
     navigate("/account");
+  };
+
+  const handleViewTransactions = () => {
+    resetTransfer();
+    navigate("/transactions");
+  };
+
+  if (!selectedAccount || !selectedPayee || !amount || !transactionId) {
     return null;
   }
 
@@ -132,16 +141,10 @@ const TransferSuccess: React.FC = () => {
         </div>
 
         <div className="result-actions">
-          <button
-            className="primary-button"
-            onClick={() => navigate("/account")}
-          >
+          <button className="primary-button" onClick={handleBackToAccounts}>
             Back to Accounts
           </button>
-          <button
-            className="secondary-button"
-            onClick={() => navigate("/transactions")}
-          >
+          <button className="secondary-button" onClick={handleViewTransactions}>
             View Transactions
           </button>
         </div>

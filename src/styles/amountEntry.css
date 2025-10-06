@@ -4,6 +4,10 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 24px;
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   min-height: 100vh;
   background: #f8f9fa;
@@ -240,6 +244,19 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .amount-entry-container {
+    padding: 16px;
+    padding-top: max(16px, env(safe-area-inset-top));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+
+  .amount-entry-header {
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
   .amount-entry-title {
     font-size: 24px;
   }
@@ -247,17 +264,47 @@
   .transfer-summary {
     flex-direction: column;
     gap: 16px;
+    padding: 20px;
   }
   
   .summary-divider {
     transform: rotate(90deg);
+    margin: 8px 0;
+  }
+
+  .summary-card {
+    padding: 14px;
+  }
+
+  .summary-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .summary-name {
+    font-size: 15px;
+  }
+
+  .summary-detail {
+    font-size: 12px;
   }
   
   .amount-input {
     font-size: 24px;
+    padding: 14px 14px 14px 44px;
+  }
+
+  .currency-symbol {
+    left: 14px;
+    font-size: 20px;
   }
   
   .amount-form {
-    padding: 24px;
+    padding: 20px;
+  }
+
+  .submit-button {
+    padding: 14px 24px;
   }
 }

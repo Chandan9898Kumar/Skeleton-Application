@@ -1,31 +1,36 @@
-import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { mockBankApi } from "../api/mockBankApi";
+import { useTransferStore } from "../stores/transferStore";
+import { ReviewDetails } from "../components/ReviewDetails";
+import ComponentErrorBoundary from "../components/ComponentErrorBoundary";
 import "../styles/reviewTransfer.css";
-import type { BankAccount } from "../api/mockBankApi";
-import type { Payee } from "../api/mockBankApi";
+
 const ReviewTransfer: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { selectedAccount, selectedPayee, amount, purpose, description } =
-    location.state as {
-      selectedAccount: BankAccount;
-      selectedPayee: Payee;
-      amount: number;
-      purpose: string;
-      description?: string;
-    };
-
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const formatCurrency = (amount: number, currency: string = "USD"): string => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currency,
-    }).format(Math.abs(amount));
-  };
+  const selectedAccount = useTransferStore((state) => state.selectedAccount);
+  const selectedPayee = useTransferStore((state) => state.selectedPayee);
+  const amount = useTransferStore((state) => state.amount);
+  const purpose = useTransferStore((state) => state.purpose);
+  const description = useTransferStore((state) => state.description);
+  const canAccessReview = useTransferStore((state) => state.canAccessReview);
+  const setTransactionResult = useTransferStore(
+    (state) => state.setTransactionResult
+  );
+  const resetToAmount = useTransferStore((state) => state.resetToAmount);
+
+  useEffect(() => {
+    // Route guard
+    if (!canAccessReview()) {
+      navigate("/account", { replace: true });
+    }
+  }, [canAccessReview, navigate]);
 
   const handleTransfer = async () => {
+    if (!selectedAccount || !selectedPayee || !amount) return;
+
     setIsProcessing(true);
 
     try {
@@ -38,48 +43,30 @@ const ReviewTransfer: React.FC = () => {
       });
 
       if (result.success) {
-        navigate("/success", {
-          state: {
-            selectedAccount,
-            selectedPayee,
-            amount,
-            purpose,
-            description,
-            transactionId: result.transactionId,
-          },
-        });
+        setTransactionResult(true, result.transactionId);
+        navigate("/success", { replace: true });
       } else {
-        navigate("/error", {
-          state: {
-            error: result.error,
-            transferData: {
-              selectedAccount,
-              selectedPayee,
-              amount,
-              purpose,
-              description,
-            },
-          },
-        });
+        setTransactionResult(false, "", result.error);
+        navigate("/error", { replace: true });
       }
     } catch (error) {
-      navigate("/error", {
-        state: {
-          error: "An unexpected error occurred. Please try again." + { error },
-          transferData: {
-            selectedAccount,
-            selectedPayee,
-            amount,
-            purpose,
-            description,
-          },
-        },
-      });
+      setTransactionResult(
+        false,
+        "",
+        `An unexpected error occurred. Please try again.${
+          error instanceof Error ? " " + error.message : ""
+        }`
+      );
+      navigate("/error", { replace: true });
     }
   };
 
+  const handleBack = () => {
+    resetToAmount();
+    navigate("/amount");
+  };
+
   if (!selectedAccount || !selectedPayee || !amount) {
-    navigate("/account");
     return null;
   }
 
@@ -88,11 +75,7 @@ const ReviewTransfer: React.FC = () => {
       <div className="review-header">
         <button
           className="back-button"
-          onClick={() =>
-            navigate("/amount", {
-              state: { selectedAccount, selectedPayee },
-            })
-          }
+          onClick={handleBack}
           disabled={isProcessing}
         >
           ← Back
@@ -101,78 +84,17 @@ const ReviewTransfer: React.FC = () => {
       </div>
 
       <div className="review-content">
-        <div className="review-section">
-          <h2 className="section-title">Transfer Details</h2>
-
-          <div className="detail-card">
-            <div className="detail-row">
-              <span className="detail-label">From Account:</span>
-              <div className="detail-value-card">
-                <span className="detail-icon">{selectedAccount.icon}</span>
-                <div className="detail-info">
-                  <span className="detail-value">
-                    {selectedAccount.accountName}
-                  </span>
-                  <span className="detail-subvalue">
-                    {selectedAccount.accountNumber}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="detail-row">
-              <span className="detail-label">To Payee:</span>
-              <div className="detail-value-card">
-                <span className="detail-icon">{selectedPayee.bankLogo}</span>
-                <div className="detail-info">
-                  <span className="detail-value">{selectedPayee.name}</span>
-                  <span className="detail-subvalue">
-                    {selectedPayee.bankName}
-                  </span>
-                  <span className="detail-subvalue">
-                    {selectedPayee.accountNumber}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="detail-row">
-              <span className="detail-label">Amount:</span>
-              <span className="detail-value amount-highlight">
-                {formatCurrency(amount, selectedAccount.currency)}
-              </span>
-            </div>
-
-            <div className="detail-row">
-              <span className="detail-label">Purpose:</span>
-              <span className="detail-value">{purpose}</span>
-            </div>
-
-            {description && (
-              <div className="detail-row">
-                <span className="detail-label">Description:</span>
-                <span className="detail-value">{description}</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="review-actions">
-          <button
-            className="transfer-button"
-            onClick={handleTransfer}
-            disabled={isProcessing}
-          >
-            {isProcessing ? (
-              <>
-                <span className="spinner"></span>
-                Processing...
-              </>
-            ) : (
-              "Confirm Transfer"
-            )}
-          </button>
-        </div>
+        <ComponentErrorBoundary componentName="Review Details">
+          <ReviewDetails
+            selectedAccount={selectedAccount}
+            selectedPayee={selectedPayee}
+            amount={amount}
+            purpose={purpose}
+            description={description}
+            isProcessing={isProcessing}
+            onConfirm={handleTransfer}
+          />
+        </ComponentErrorBoundary>
       </div>
     </div>
   );

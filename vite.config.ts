@@ -5,7 +5,7 @@ import path from "path";
 export default defineConfig({
   // Enable React support with JSX transformation and fast refresh
   plugins: [react()],
-  
+
   resolve: {
     // Path aliases for cleaner imports and better maintainability
     alias: {
@@ -16,7 +16,7 @@ export default defineConfig({
       "@api": path.resolve(__dirname, "./src/api"), // Direct API imports
     },
   },
-  
+
   server: {
     port: 3000, // Custom dev server port
     host: true, // Expose to network (0.0.0.0) - allows mobile testing on same network
@@ -31,12 +31,12 @@ export default defineConfig({
       },
     },
   },
-  
+
   preview: {
     port: 4173, // Port for production preview (vite preview)
     host: true, // Expose preview to network for testing
   },
-  
+
   build: {
     outDir: "dist", // Output directory for production build
     sourcemap: true, // Generate source maps for debugging production issues
@@ -58,14 +58,19 @@ export default defineConfig({
       },
     },
   },
-  
+
   optimizeDeps: {
     // Pre-bundle these dependencies for faster dev server startup
-    include: ["react", "react-dom", "react-router-dom", "@tanstack/react-query"],
+    include: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "@tanstack/react-query",
+    ],
     // Don't pre-bundle these (they're already optimized)
     exclude: ["@vite/client", "@vite/env"],
   },
-  
+
   css: {
     devSourcemap: true, // Generate CSS source maps in development
     preprocessorOptions: {
@@ -75,12 +80,12 @@ export default defineConfig({
       },
     },
   },
-  
+
   define: {
     // Define global constants available in your app
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version), // Access via __APP_VERSION__
   },
-  
+
   esbuild: {
     // Remove console.log and debugger statements in production
     drop: ["console", "debugger"], // Cleaner production code

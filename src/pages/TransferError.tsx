@@ -1,51 +1,57 @@
-import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import "../styles/transferResult.css";
-
-type TransferData = {
-  // Add the expected properties for transferData here
-  // Example:
-  amount?: number;
-  recipient?: string;
-  // Add more fields as needed
-};
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTransferStore } from '../stores/transferStore';
+import '../styles/transferResult.css';
 
 const TransferError: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { error, transferData } = location.state as {
-    error: string;
-    transferData: TransferData;
-  };
+  
+  const selectedAccount = useTransferStore((state) => state.selectedAccount);
+  const selectedPayee = useTransferStore((state) => state.selectedPayee);
+  const amount = useTransferStore((state) => state.amount);
+  const error = useTransferStore((state) => state.error);
+  const canAccessResult = useTransferStore((state) => state.canAccessResult);
+  const resetTransfer = useTransferStore((state) => state.resetTransfer);
+
+  useEffect(() => {
+    // Route guard
+    if (!canAccessResult() || !error) {
+      navigate('/account', { replace: true });
+    }
+  }, [canAccessResult, error, navigate]);
 
   const handleRetry = () => {
-    if (transferData) {
-      navigate("/review", { state: transferData });
+    if (selectedAccount && selectedPayee && amount) {
+      navigate('/review');
     } else {
-      navigate("/account");
+      resetTransfer();
+      navigate('/account');
     }
   };
+
+  const handleBackToAccounts = () => {
+    resetTransfer();
+    navigate('/account');
+  };
+
+  if (!error) {
+    return null;
+  }
 
   return (
     <div className="result-container error-page">
       <div className="result-content">
         <div className="result-icon error-icon">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="12" cy="12" r="10" />
             <line x1="15" y1="9" x2="9" y2="15" />
             <line x1="9" y1="9" x2="15" y2="15" />
           </svg>
         </div>
-
+        
         <h1 className="result-title">Transfer Failed</h1>
         <p className="result-message error-message">
-          {error ||
-            "An unexpected error occurred while processing your transfer."}
+          {error || 'An unexpected error occurred while processing your transfer.'}
         </p>
 
         <div className="error-suggestions">
@@ -59,12 +65,15 @@ const TransferError: React.FC = () => {
         </div>
 
         <div className="result-actions">
-          <button className="primary-button" onClick={handleRetry}>
+          <button 
+            className="primary-button"
+            onClick={handleRetry}
+          >
             Try Again
           </button>
-          <button
+          <button 
             className="secondary-button"
-            onClick={() => navigate("/account")}
+            onClick={handleBackToAccounts}
           >
             Back to Accounts
           </button>
