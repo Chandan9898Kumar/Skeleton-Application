@@ -17,10 +17,10 @@ const TransferSuccess: React.FC = () => {
 
   useEffect(() => {
     // Route guard
-    if (!canAccessResult() || !transactionId) {
+    if (!canAccessResult() ) {
       navigate("/account", { replace: true });
     }
-  }, [canAccessResult, transactionId, navigate]);
+  }, [canAccessResult, navigate]);
 
   const formatCurrency = (amount: number, currency: string = "USD"): string => {
     return new Intl.NumberFormat("en-US", {
@@ -45,7 +45,6 @@ const TransferSuccess: React.FC = () => {
   };
 
   const handleViewTransactions = () => {
-    // resetTransfer();
     navigate("/transactions");
   };
 

@@ -1,18 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect, useCallback, useMemo } from "react";
 import { Skeleton } from "../components/Skeleton";
 import { VirtualList } from "../components/VirtualList";
 import { mockApi } from "../api/mockApi";
 import type { AccountData, Transaction } from "../api/mockApi";
 import "../styles/account.css";
+import { useTransferStore } from "../stores/transferStore";
 
 const TRANSACTION_ITEM_HEIGHT = 80;
 const VIRTUAL_LIST_HEIGHT = 500;
+
+// ✅ Create formatters once - reused across all calls
+const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+
+// ✅ Optimized formatting functions
+const formatCurrency = (amount: number, currency: string = "USD"): string => {
+  if (currency !== "USD") {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currency,
+    }).format(amount);
+  }
+  return currencyFormatter.format(amount);
+};
+
+const formatDate = (dateString: string): string => {
+  return dateFormatter.format(new Date(dateString));
+};
 
 const TransactionAccount: React.FC = () => {
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoadingAccount, setIsLoadingAccount] = useState(true);
   const [isLoadingTransactions, setIsLoadingTransactions] = useState(true);
+  const resetTransfer = useTransferStore((state) => state.resetTransfer);
+
+  useLayoutEffect(() => {
+    resetTransfer();
+  }, [resetTransfer]);
 
   useEffect(() => {
     // Fetch account data
@@ -40,23 +73,8 @@ const TransactionAccount: React.FC = () => {
       });
   }, []);
 
-  const formatCurrency = (amount: number, currency: string = "USD"): string => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currency,
-    }).format(amount);
-  };
-
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }).format(date);
-  };
-
-  const renderBalanceCard = () => {
+  // ✅ Memoized balance card - only re-renders when dependencies change
+  const renderBalanceCard = useCallback(() => {
     if (isLoadingAccount) {
       return (
         <div className="balance-card-skeleton">
@@ -86,14 +104,14 @@ const TransactionAccount: React.FC = () => {
         <p className="account-number">Account: {accountData.accountNumber}</p>
       </div>
     );
-  };
+  }, [isLoadingAccount, accountData]);
 
-  const renderTransactionItem = (
+  // ✅ Memoized transaction item renderer - stable reference for VirtualList
+  const renderTransactionItem = useCallback((
     transaction: Transaction,
     index: number,
     style: React.CSSProperties
   ) => {
-    console.log(index, "index");
     return (
       <div key={transaction.id} className="transaction-item" style={style}>
         <div className={`transaction-icon ${transaction.type}`}>
@@ -109,35 +127,37 @@ const TransactionAccount: React.FC = () => {
         </div>
       </div>
     );
-  };
+  }, []);
 
-  const renderTransactionSkeleton = (index: number) => {
-    const style: React.CSSProperties = {
-      top: index * TRANSACTION_ITEM_HEIGHT,
-      height: TRANSACTION_ITEM_HEIGHT,
-    };
+  // ✅ Memoized skeleton items - prevent unnecessary re-renders
+  const skeletonItems = useMemo(() => 
+    Array.from({ length: 10 }).map((_, index) => {
+      const style: React.CSSProperties = {
+        top: index * TRANSACTION_ITEM_HEIGHT,
+        height: TRANSACTION_ITEM_HEIGHT,
+      };
 
-    return (
-      <div
-        key={`skeleton-${index}`}
-        className="transaction-item-skeleton"
-        style={style}
-      >
-        <Skeleton
-          width="48px"
-          height="48px"
-          variant="circle"
-          className="skeleton-icon"
-        />
-        <div className="skeleton-details">
-          <Skeleton width="60%" height="16px" style={{ marginBottom: "8px" }} />
-          <Skeleton width="40%" height="14px" />
+      return (
+        <div
+          key={`skeleton-${index}`}
+          className="transaction-item-skeleton"
+          style={style}
+        >
+          <Skeleton
+            width="48px"
+            height="48px"
+            variant="circle"
+            className="skeleton-icon"
+          />
+          <div className="skeleton-details">
+            <Skeleton width="60%" height="16px" style={{ marginBottom: "8px" }} />
+            <Skeleton width="40%" height="14px" />
+          </div>
+          <Skeleton className="skeleton-amount" />
         </div>
-        <Skeleton className="skeleton-amount" />
-      </div>
-    );
-  };
-
+      );
+    }), []);
+  
   return (
     <div className="account-container">
       <div className="account-header">
@@ -162,9 +182,7 @@ const TransactionAccount: React.FC = () => {
                 className="virtual-list-content"
                 style={{ height: TRANSACTION_ITEM_HEIGHT * 10 }}
               >
-                {Array.from({ length: 10 }).map((_, index) =>
-                  renderTransactionSkeleton(index)
-                )}
+                {skeletonItems}
               </div>
             </div>
           ) : (

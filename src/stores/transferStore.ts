@@ -100,7 +100,7 @@ export const useTransferStore = create<TransferState>((set, get) => ({
     set({ amount, purpose, description }),
 
   setTransactionResult: (success = true, transactionId = "", error = "") => {
-    console.log(success, "success");
+    console.log(success, "success",transactionId);
     set({ transactionId, error });
   },
 

@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import  { mockBankApi } from '../api/mockBankApi';
-import type { Payee } from '../api/mockBankApi';
-import { useTransferStore } from '../stores/transferStore';
-import { SelectedAccountCard } from '../components/SelectedAccountCard';
-import { PayeeList } from '../components/PayeeList';
-import ComponentErrorBoundary from '../components/ComponentErrorBoundary';
-import '../styles/payeeSelection.css';
-import '../styles/errorState.css';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { mockBankApi } from "../api/mockBankApi";
+import type { Payee } from "../api/mockBankApi";
+import { useTransferStore } from "../stores/transferStore";
+import { SelectedAccountCard } from "../components/SelectedAccountCard";
+import { PayeeList } from "../components/PayeeList";
+import ComponentErrorBoundary from "../components/ComponentErrorBoundary";
+import "../styles/payeeSelection.css";
+import "../styles/errorState.css";
 
 const PayeeSelection: React.FC = () => {
   const navigate = useNavigate();
-  
+
   const selectedAccount = useTransferStore((state) => state.selectedAccount);
   const payees = useTransferStore((state) => state.payees);
   const payeesError = useTransferStore((state) => state.payeesError);
@@ -26,45 +26,54 @@ const PayeeSelection: React.FC = () => {
   useEffect(() => {
     // Route guard
     if (!canAccessPayee()) {
-      navigate('/account', { replace: true });
+      navigate("/account", { replace: true });
       return;
     }
 
     // Only fetch if we don't have payees cached
     if (payees.length === 0 && !payeesError) {
       setLoadingPayees(true);
-      mockBankApi.fetchPayees(100)
-        .then(data => {
+      mockBankApi
+        .fetchPayees(100)
+        .then((data) => {
           setPayees(data);
         })
-        .catch(error => {
-          console.error('Error fetching payees:', error);
-          setPayeesError('Failed to load payees. Please try again.');
+        .catch((error) => {
+          console.error("Error fetching payees:", error);
+          setPayeesError("Failed to load payees. Please try again.");
         });
     }
-  }, [canAccessPayee, navigate]);
+  }, [
+    canAccessPayee,
+    navigate,
+    payees.length,
+    payeesError,
+    setLoadingPayees,
+    setPayees,
+    setPayeesError,
+  ]);
 
   const handleRetry = () => {
     setLoadingPayees(true);
-    mockBankApi.fetchPayees(100)
-      .then(data => {
+    mockBankApi
+      .fetchPayees(100)
+      .then((data) => {
         setPayees(data);
       })
-      .catch(error => {
-        console.error('Error fetching payees:', error);
-        setPayeesError('Failed to load payees. Please try again.');
+      .catch((error) => {
+        console.error("Error fetching payees:", error);
+        setPayeesError("Failed to load payees. Please try again.");
       });
   };
 
-
   const handlePayeeSelect = (payee: Payee) => {
     setSelectedPayee(payee);
-    navigate('/amount');
+    navigate("/amount");
   };
 
   const handleBack = () => {
     resetToAccount();
-    navigate('/account');
+    navigate("/account");
   };
 
   if (!selectedAccount) {
@@ -74,10 +83,7 @@ const PayeeSelection: React.FC = () => {
   return (
     <div className="payee-selection-container">
       <div className="payee-selection-header">
-        <button 
-          className="back-button"
-          onClick={handleBack}
-        >
+        <button className="back-button" onClick={handleBack}>
           ← Back
         </button>
         <h1 className="payee-selection-title">Select Payee</h1>
