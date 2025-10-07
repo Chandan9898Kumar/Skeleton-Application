@@ -88,6 +88,6 @@ export default defineConfig({
 
   esbuild: {
     // Remove console.log and debugger statements in production
-    drop: ["console", "debugger"], // Cleaner production code
+    // drop: ["console", "debugger"], // Cleaner production code
   },
 });

@@ -51,7 +51,7 @@ const AccountSelection: React.FC = () => {
     setSelectedAccount(account);
     navigate('/payee');
   };
-
+console.log(accounts, "accounts");
   return (
     <div className="account-selection-container">
       <div className="account-selection-header">
