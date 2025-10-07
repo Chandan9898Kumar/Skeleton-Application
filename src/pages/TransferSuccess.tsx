@@ -45,7 +45,7 @@ const TransferSuccess: React.FC = () => {
   };
 
   const handleViewTransactions = () => {
-    resetTransfer();
+    // resetTransfer();
     navigate("/transactions");
   };
 

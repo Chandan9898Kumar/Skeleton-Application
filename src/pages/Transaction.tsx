@@ -8,7 +8,7 @@ import "../styles/account.css";
 const TRANSACTION_ITEM_HEIGHT = 80;
 const VIRTUAL_LIST_HEIGHT = 500;
 
-const Account: React.FC = () => {
+const TransactionAccount: React.FC = () => {
   const [accountData, setAccountData] = useState<AccountData | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoadingAccount, setIsLoadingAccount] = useState(true);
@@ -93,7 +93,7 @@ const Account: React.FC = () => {
     index: number,
     style: React.CSSProperties
   ) => {
-    console.log(index,'index');
+    console.log(index, "index");
     return (
       <div key={transaction.id} className="transaction-item" style={style}>
         <div className={`transaction-icon ${transaction.type}`}>
@@ -181,4 +181,4 @@ const Account: React.FC = () => {
   );
 };
 
-export default Account;
+export default TransactionAccount;
