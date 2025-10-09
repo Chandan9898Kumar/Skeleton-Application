@@ -1,0 +1,83 @@
+.payee-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #f3f4f6;
+}
+
+.payee-item:hover {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  transform: translateX(4px);
+}
+
+.payee-item:active {
+  transform: translateX(2px);
+}
+
+.payee-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.payee-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.payee-bank {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.payee-account {
+  font-size: 12px;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.payee-info-btn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.payee-info-btn:hover {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+@media (max-width: 480px) {
+  .payee-item {
+    padding: 14px;
+  }
+
+  .payee-name {
+    font-size: 14px;
+  }
+
+  .payee-bank {
+    font-size: 12px;
+  }
+
+  .payee-account {
+    font-size: 11px;
+  }
+}

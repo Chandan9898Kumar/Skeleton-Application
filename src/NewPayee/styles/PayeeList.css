@@ -1,0 +1,16 @@
+.payee-list-container {
+  padding: 0 16px;
+}
+
+.payee-list-empty {
+  padding: 40px 16px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .payee-list-container {
+    padding: 0 12px;
+  }
+}

@@ -9,7 +9,7 @@ import PayeeSelection from "./pages/PayeeSelection";
 import ReviewTransfer from "./pages/ReviewTransfer";
 import TransferError from "./pages/TransferError";
 import TransferSuccess from "./pages/TransferSuccess";
-
+import LocalTransferPayee from './NewPayee/LocalTransfer'
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -25,6 +25,7 @@ const App = () => (
         <Route path="/error" element={<TransferError />} />
         <Route path="/transactions" element={<TransactionAccount />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="/local-transfer-payee" element={<LocalTransferPayee />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
