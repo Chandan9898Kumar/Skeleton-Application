@@ -1,0 +1,128 @@
+.status-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(180deg, hsl(220, 60%, 12%) 0%, hsl(217, 70%, 35%) 100%);
+}
+
+.status-screen-container {
+  width: 100%;
+  max-width: 448px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.status-screen-icon {
+  display: flex;
+  justify-content: center;
+  animation: zoomIn 0.7s ease-out 0.1s both;
+}
+
+.status-screen-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  margin: 0;
+  animation: slideUp 0.5s ease-out 0.2s both;
+}
+
+.status-screen-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.3);
+  overflow: hidden;
+  animation: slideUp 0.7s ease-out 0.3s both;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-screen-header {
+  padding: 24px 24px 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.status-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.status-badge-success {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge-error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.status-reference {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.status-screen-content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-screen-buttons {
+  padding: 0 24px 24px 24px;
+  display: flex;
+  gap: 12px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .status-screen {
+    padding: 16px;
+  }
+  
+  .status-screen-title {
+    font-size: 24px;
+  }
+}

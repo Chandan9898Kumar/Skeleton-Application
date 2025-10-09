@@ -1,0 +1,27 @@
+.error-message {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.error-message-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.error-message-description {
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.error-message-contact {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}

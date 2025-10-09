@@ -1,0 +1,154 @@
+.demo-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(180deg, hsl(220, 60%, 12%) 0%, hsl(217, 70%, 35%) 100%);
+}
+
+.demo-container {
+  width: 100%;
+  max-width: 672px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.demo-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.demo-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.demo-subtitle {
+  color: #bfdbfe;
+  font-size: 18px;
+  margin: 0;
+}
+
+.demo-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.demo-features-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 16px 0;
+}
+
+.demo-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #dbeafe;
+}
+
+.demo-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.demo-feature-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.demo-buttons {
+  padding-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.demo-btn {
+  height: 56px;
+  font-size: 18px;
+  border-radius: 24px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.demo-btn-success {
+  background-color: #22c55e;
+  color: white;
+}
+
+.demo-btn-success:hover {
+  background-color: #16a34a;
+}
+
+.demo-btn-error {
+  background-color: #ef4444;
+  color: white;
+}
+
+.demo-btn-error:hover {
+  background-color: #dc2626;
+}
+
+.demo-code-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.demo-code-label {
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #bfdbfe;
+  font-size: 14px;
+}
+
+.demo-code-block {
+  font-size: 12px;
+  overflow-x: auto;
+  margin: 0;
+  color: #dbeafe;
+  white-space: pre;
+  font-family: 'Courier New', monospace;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .demo-title {
+    font-size: 28px;
+  }
+  
+  .demo-subtitle {
+    font-size: 16px;
+  }
+  
+  .demo-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .demo-card {
+    padding: 24px;
+  }
+}

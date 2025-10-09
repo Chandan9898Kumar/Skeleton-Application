@@ -96,6 +96,31 @@ const Index = () => {
         >
           View payee →
         </Link>
+        <Link
+          to="/custom-success-error"
+          style={{
+            display: "inline-block",
+            padding: "16px 32px",
+            background: "white",
+            color: "#667eea",
+            textDecoration: "none",
+            borderRadius: "8px",
+            fontWeight: "600",
+            fontSize: "16px",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+            transition: "transform 0.2s, box-shadow 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.boxShadow = "0 6px 25px rgba(0,0,0,0.25)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.2)";
+          }}
+        >
+          View Success / Error Screen →
+        </Link>
       </div>
     </div>
   );
