@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
@@ -89,5 +89,12 @@ export default defineConfig({
   esbuild: {
     // Remove console.log and debugger statements in production
     // drop: ["console", "debugger"], // Cleaner production code
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/__tests__/setup.ts'],
+    include: ['src/__tests__/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['node_modules', 'dist'],
   },
 });
