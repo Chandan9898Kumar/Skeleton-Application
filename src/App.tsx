@@ -1,16 +1,16 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import TransactionAccount from "./pages/Transaction";
+import MainScreen from "./CustomSuccessError/MainScreen";
+import LocalTransferPayee from "./NewPayee/LocalTransfer";
 import AccountSelection from "./pages/AccountSelection";
 import AmountEntry from "./pages/AmountEntry";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PayeeSelection from "./pages/PayeeSelection";
 import ReviewTransfer from "./pages/ReviewTransfer";
+import TransactionAccount from "./pages/Transaction";
 import TransferError from "./pages/TransferError";
 import TransferSuccess from "./pages/TransferSuccess";
-import LocalTransferPayee from "./NewPayee/LocalTransfer";
-import MainScreen from "./CustomSuccessError/MainScreen";
 const queryClient = new QueryClient();
 
 const App = () => (
