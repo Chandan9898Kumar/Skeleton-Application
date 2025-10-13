@@ -1,0 +1,48 @@
+/* Safe Area CSS Variables for Native Apps */
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+}
+
+/* Native app specific styles */
+@media (display-mode: standalone) {
+  body {
+    /* Ensure full screen usage in native app */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  /* Enhanced safe area for native apps */
+  .safe-area-container {
+    /* Use max() to ensure minimum padding even if env() fails */
+    padding-top: max(env(safe-area-inset-top, 0px), 20px);
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 20px);
+  }
+}
+
+/* Global safe area container */
+.safe-area-container {
+  padding-top: var(--safe-area-inset-top);
+  padding-right: var(--safe-area-inset-right);
+  padding-bottom: var(--safe-area-inset-bottom);
+  padding-left: var(--safe-area-inset-left);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Header safe area */
+.safe-area-header {
+  padding-top: var(--safe-area-inset-top);
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
+}
+
+/* Bottom safe area for navigation */
+.safe-area-bottom {
+  padding-bottom: var(--safe-area-inset-bottom);
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
+}

@@ -90,7 +90,7 @@ export const AccountsGrid: React.FC<AccountsGridProps> = ({
       {accounts.map(account => (
         <div 
           key={account.id} 
-          className="account-card"
+          className="account-grid-card"
           onClick={() => onAccountSelect(account)}
         >
           <div className="account-card-header">
