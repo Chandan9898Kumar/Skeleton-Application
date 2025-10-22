@@ -112,6 +112,7 @@ const TransactionAccount: React.FC = () => {
     index: number,
     style: React.CSSProperties
   ) => {
+    console.log(index)
     return (
       <div key={transaction.id} className="transaction-item" style={style}>
         <div className={`transaction-icon ${transaction.type}`}>
