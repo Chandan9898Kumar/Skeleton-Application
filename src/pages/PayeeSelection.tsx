@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { mockBankApi } from "../api/mockBankApi";
 import type { Payee } from "../api/mockBankApi";
-import { useTransferStore } from "../stores/transferStore";
-import { SelectedAccountCard } from "../components/SelectedAccountCard";
-import { PayeeList } from "../components/PayeeList";
+import { mockBankApi } from "../api/mockBankApi";
 import ComponentErrorBoundary from "../components/ComponentErrorBoundary";
-import "../styles/payeeSelection.css";
+import { PayeeList } from "../components/PayeeList";
+import { SelectedAccountCard } from "../components/SelectedAccountCard";
+import { useTransferStore } from "../stores/transferStore";
 import "../styles/errorState.css";
+import "../styles/payeeSelection.css";
 
 const PayeeSelection: React.FC = () => {
   const navigate = useNavigate();
